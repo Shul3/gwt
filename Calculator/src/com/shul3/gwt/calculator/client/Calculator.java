@@ -60,7 +60,7 @@ public class Calculator implements EntryPoint {
 		    RootPanel.get("resultsList").add(resultsPanel);
 		    
 		    lastUpdatedLabel.setText("_________Number 1___________|"
-		    						+"____Operation( +, -, /, *)______|"
+		    						+"____Operation( +, -, /, *, %)____|"
 		    						+"_________Number 2___________");
 		    
 	    // TODO Move cursor focus to the input box.
@@ -132,7 +132,7 @@ public class Calculator implements EntryPoint {
 		  else if (x ==2) {
 			  
 		      newSymbolTextBox2.setFocus(true);
-		      if (!s.matches("^[+-/*]{1}$")) {
+		      if (!s.matches("^[+-/*%]{1}$")) {
 			        Window.alert("'" + s + "' is not a valid symbol.");
 			        newSymbolTextBox2.selectAll();
 			        
@@ -176,6 +176,10 @@ public class Calculator implements EntryPoint {
 	        	 }
 	        	 symbol = Float.toString(n1 / n2);;
 	        	 break;
+	         case "%" :
+	        	 symbol = Float.toString(n1 % n2);
+	        	 break;
+	         
 		  }
 		  
 		  symbol = "Answer: " + symbol;
