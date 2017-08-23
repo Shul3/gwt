@@ -20,46 +20,44 @@ import java.util.ArrayList;
 
 public class Calculator implements EntryPoint {
 
-	private VerticalPanel mainPanel = new VerticalPanel();
+	private VerticalPanel resultsPanel = new VerticalPanel();
     private FlexTable resultsFlexTable = new FlexTable();
-    private HorizontalPanel addPanel = new HorizontalPanel();
+    private HorizontalPanel addCalculation = new HorizontalPanel();
     private TextBox newSymbolTextBox = new TextBox();
     private TextBox newSymbolTextBox2 = new TextBox();
     private TextBox newSymbolTextBox3 = new TextBox();
     private Button addCalculateButton = new Button("Calculate");
     private Label lastUpdatedLabel = new Label();
-    private ArrayList<String> stocks = new ArrayList<String>();
+    private ArrayList<String> resultsList = new ArrayList<String>();
     private String[] results = new String[3];
     
 
-	  /**
-	   * Entry point method.
-	   */
+	  // Entry point method.
+	  
 	  public void onModuleLoad() {
-		// Create table for stock data.
-		    resultsFlexTable.setText(0, 0, "Operations");
-		    resultsFlexTable.setText(0, 1, "Log");
-		    resultsFlexTable.setText(0, 2, "Remove");
+		// Create table for Results data.
+		    resultsFlexTable.setText(0, 0, "Operations Log");
+		    resultsFlexTable.setText(0, 1, "Remove");
 		   
 		    
-		 // Add styles to elements in the stock list table.
+		 // Add styles to elements in the results list table.
 		    resultsFlexTable.getRowFormatter().addStyleName(0, "watchListHeader");
 		    resultsFlexTable.addStyleName("watchList");
 		    
-		 // Assemble Add Stock panel.
-		    addPanel.add(newSymbolTextBox);
-		    addPanel.add(newSymbolTextBox2);
-		    addPanel.add(newSymbolTextBox3);
-		    addPanel.add(addCalculateButton);
+		 // Assemble addCalculation panel.
+		    addCalculation.add(newSymbolTextBox);
+		    addCalculation.add(newSymbolTextBox2);
+		    addCalculation.add(newSymbolTextBox3);
+		    addCalculation.add(addCalculateButton);
 
-		    // Assemble Main panel.
-		    mainPanel.add(resultsFlexTable);
+		    // Assemble Results panel.
+		    resultsPanel.add(resultsFlexTable);
 		    
-		    mainPanel.add(lastUpdatedLabel);
-		    mainPanel.add(addPanel);
+		    resultsPanel.add(lastUpdatedLabel);
+		    resultsPanel.add(addCalculation);
 
-		 // Associate the Main panel with the HTML host page.
-		    RootPanel.get("resultsList").add(mainPanel);
+		 // Associate the Results panel with the HTML host page.
+		    RootPanel.get("resultsList").add(resultsPanel);
 		    
 		    lastUpdatedLabel.setText("_________Number 1___________|"
 		    						+"____Operation( +, -, /, *)______|"
@@ -84,7 +82,6 @@ public class Calculator implements EntryPoint {
 		        	 	
 		            addResult(1, temp);
 		            results[0] = temp;
-		            newSymbolTextBox2.setFocus(true);
 		          }
 		        }
 		      });
@@ -97,8 +94,7 @@ public class Calculator implements EntryPoint {
 			        	 	
 			            addResult(2,temp2 );
 			            results[1] = temp2;
-			            newSymbolTextBox3.setFocus(true);
-			          }
+			           }
 			        }
 			      });
 		      
@@ -110,7 +106,7 @@ public class Calculator implements EntryPoint {
 			        	 	
 			            addResult(3, temp3) ;
 			            results[2] = temp3;
-			            newSymbolTextBox.setFocus(true);
+			            //calculation(results);
 			          }
 			        }
 			      });
@@ -130,6 +126,8 @@ public class Calculator implements EntryPoint {
 			      newSymbolTextBox.selectAll();
 			      return;
 			  }
+		      if (x==1) newSymbolTextBox2.setFocus(true);
+		      if (x==3) newSymbolTextBox.setFocus(true);
 		  } 
 		  else if (x ==2) {
 			  
@@ -140,6 +138,7 @@ public class Calculator implements EntryPoint {
 			        
 			        return;
 			      }
+		      newSymbolTextBox3.setFocus(true);
 		      
 		  }
 		  	  
@@ -188,22 +187,22 @@ public class Calculator implements EntryPoint {
 	  
 	  private void addToTable(final String s)
 	  {
-		// Add the results to the Flex table.
+		// Add the results to the Results table.
 	      int row = resultsFlexTable.getRowCount();
-	      stocks.add(s);
+	      resultsList.add(s);
 	      resultsFlexTable.setText(row, 0, s);
 	     
 	      
-	   // Add a button to remove  results from the Flex table.
-	      Button removeStockButton = new Button("x");
-	      removeStockButton.addClickHandler(new ClickHandler() {
+	   // Add a button to remove  results from the Results table.
+	      Button removeResultsButton = new Button("x");
+	      removeResultsButton.addClickHandler(new ClickHandler() {
 	        public void onClick(ClickEvent event) {
-	          int removedIndex = stocks.indexOf(s);
-	          stocks.remove(removedIndex);
+	          int removedIndex = resultsList.indexOf(s);
+	          resultsList.remove(removedIndex);
 	          resultsFlexTable.removeRow(removedIndex + 1);
 	        }
 	      });
-	      resultsFlexTable.setWidget(row, 3, removeStockButton);
+	      resultsFlexTable.setWidget(row, 2, removeResultsButton);
 	  }
 	  
 	  }
